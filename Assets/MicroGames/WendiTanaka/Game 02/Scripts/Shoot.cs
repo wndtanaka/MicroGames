@@ -5,25 +5,35 @@ namespace WendiTanaka
 {
     public class Shoot : MonoBehaviour
     {
-        public float damage = 10f;
-        public float range = 100f;
-        public Camera cam;
+        public GameObject bulletPrefab;
+        public Transform firePoint;
+        Vector3 target;
+        public Bullet bullet;
 
         void Update()
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetMouseButtonDown(0))
             {
                 Shooting();
             }
         }
         void Shooting()
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, range))
+
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                Debug.Log(hit.transform.name);
+                Debug.Log(hit.collider.name);
+                Target target = GetComponent<Target>();
+                if (target != null)
+                {
+                    target.Shot();
+                }
             }
+            Vector3 targetPoint = ray.origin + (ray.direction * 10);
+            target = targetPoint - transform.position;
+            bullet.Fire(target);
         }
     }
 }

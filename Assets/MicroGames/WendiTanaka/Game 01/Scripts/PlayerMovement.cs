@@ -29,8 +29,10 @@ namespace WendiTanaka
         }
         void FixedUpdate()
         {
+            // checking if is grounded or not and return as a bool
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius,checkGround);
         }
+        // movement using input
         void Move()
         {
             if (Input.GetKey(KeyCode.A))
@@ -51,10 +53,12 @@ namespace WendiTanaka
         }
         void OnCollisionStay2D(Collision2D other)
         {
+            // if its colliding with platform then set the platform to the player's parent
             if (other.gameObject.tag == "Platform")
             {
                 transform.parent = other.transform;
             }
+            // if on finish platform, then change condition to true
             if (other.gameObject.tag == "Finish")
             {
                 StirlingMulvey.GlobalGameManager.gameWon = true;
@@ -63,6 +67,7 @@ namespace WendiTanaka
 
         void OnCollisionExit2D(Collision2D other)
         {
+            // if not colliding with platform
             if (other.gameObject.tag == "Platform")
             {
                 transform.parent = null;
