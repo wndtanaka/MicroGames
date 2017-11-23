@@ -35,7 +35,6 @@ namespace StirlingMulvey
         {
             //reset i to 0, ready to count down again.
             i = 0;
-            
         }
 
         void LoadLevel()
